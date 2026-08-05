@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ReqSort</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main>
+  <h1>ReqSort</h1>
+  <p>システムへの要望を一行ずつ入力すると、機能要件・非機能要件・確認事項に整理する。</p>
+  <form method="post">
+    <textarea name="requirements" rows="10" placeholder="利用者はメールアドレスでログインできる\n応答時間は2秒以内とする\n使いやすい画面にする">{{ text }}</textarea>
+    <button type="submit">要件を整理する</button>
+  </form>
+  {% if result %}
+  <section class="grid">
+    <article><h2>機能要件</h2><ul>{% for x in result[0] %}<li>{{ x }}</li>{% else %}<li>該当なし</li>{% endfor %}</ul></article>
+    <article><h2>非機能要件</h2><ul>{% for x in result[1] %}<li>{{ x }}</li>{% else %}<li>該当なし</li>{% endfor %}</ul></article>
+    <article><h2>確認事項</h2><ul>{% for x in result[2] %}<li>{{ x }}</li>{% else %}<li>曖昧表現は検出されなかった</li>{% endfor %}</ul></article>
+  </section>
+  {% endif %}
+</main>
+</body>
+</html>
